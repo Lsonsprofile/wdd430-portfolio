@@ -1,26 +1,39 @@
+import { Suspense } from 'react';
+import { connection } from 'next/server';
+import type { Project } from '@/lib/projects-db';
+
 async function getSchoolProjects() {
+  // Tell Next.js to wait for a user request before fetching
+  await connection(); 
   const res = await fetch('http://localhost:3000/api/projects?type=school', { cache: 'no-store' });
   if (!res.ok) throw new Error('Failed to fetch projects');
   return res.json();
 }
 
-export default async function SchoolProjects() {
+async function SchoolList() {
   const projects = await getSchoolProjects();
+  return (
+    <ul className="space-y-4">
+      {projects.map((project: Project) => ( // Removed 'any' and used the Project interface
+        <li key={project.id} className="p-4 border rounded bg-gray-50">
+          <h2 className="text-xl font-semibold">{project.title}</h2>
+          <p className="text-gray-600">{project.description}</p>
+          <p className="text-sm text-gray-500 mt-2">
+            <strong>Technologies:</strong> {project.technologies.join(', ')}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
+export default function SchoolProjects() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">School Projects</h1>
-      <ul className="space-y-4">
-        {projects.map((project: any) => (
-          <li key={project.id} className="p-4 border rounded bg-gray-50">
-            <h2 className="text-xl font-semibold">{project.title}</h2>
-            <p className="text-gray-600">{project.description}</p>
-            <p className="text-sm text-gray-500 mt-2">
-              <strong>Technologies:</strong> {project.technologies.join(', ')}
-            </p>
-          </li>
-        ))}
-      </ul>
+      <Suspense fallback={<p>Loading school projects...</p>}>
+        <SchoolList />
+      </Suspense>
     </div>
   );
 }
