@@ -1,10 +1,15 @@
 import { Suspense } from 'react';
-import { connection } from 'next/server';
+import { headers } from 'next/headers'; // 1. Import headers
 import type { Project } from '@/lib/projects-db';
 
 async function getProjects() {
-  await connection();
-  const res = await fetch('http://localhost:3000/api/projects', { cache: 'no-store' });
+  const headersList = await headers(); // 2. Get the headers
+  const host = headersList.get('host');
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  
+  // 3. Use the dynamic URL
+  const res = await fetch(`${protocol}://${host}/api/projects`, { cache: 'no-store' });
+  
   if (!res.ok) throw new Error('Failed to fetch projects');
   return res.json();
 }

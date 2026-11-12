@@ -1,10 +1,14 @@
 import { Suspense } from 'react';
-import { connection } from 'next/server';
+import { headers } from 'next/headers';
 import type { Project } from '@/lib/projects-db';
 
 async function getOpenSourceProjects() {
-  await connection();
-  const res = await fetch('http://localhost:3000/api/projects?type=opensource', { cache: 'no-store' });
+  const headersList = await headers();
+  const host = headersList.get('host');
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  
+  const res = await fetch(`${protocol}://${host}/api/projects?type=opensource`, { cache: 'no-store' });
+  
   if (!res.ok) throw new Error('Failed to fetch projects');
   return res.json();
 }
