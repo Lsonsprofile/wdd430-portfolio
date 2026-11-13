@@ -2,13 +2,22 @@ import { Suspense } from 'react';
 import { headers } from 'next/headers';
 import type { Project } from '@/lib/projects-db';
 
+// Skeleton for the component fallback
+function ProjectSkeleton() {
+  return (
+    <div className="animate-pulse space-y-4">
+      <div className="h-32 rounded-xl bg-slate-200" />
+      <div className="h-32 rounded-xl bg-slate-200" />
+    </div>
+  );
+}
+
 async function getSchoolProjects() {
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
   
   const res = await fetch(`${protocol}://${host}/api/projects?type=school`, { cache: 'no-store' });
-  
   if (!res.ok) throw new Error('Failed to fetch projects');
   return res.json();
 }
@@ -34,7 +43,7 @@ export default function SchoolProjects() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">School Projects</h1>
-      <Suspense fallback={<p>Loading school projects...</p>}>
+      <Suspense fallback={<ProjectSkeleton />}>
         <SchoolList />
       </Suspense>
     </div>

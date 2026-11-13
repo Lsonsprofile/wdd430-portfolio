@@ -34,7 +34,12 @@ export default function OpenSourceProjects() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">Open Source Projects</h1>
-      <Suspense fallback={<p>Loading open source projects...</p>}>
+      <Suspense fallback={
+        <div className="animate-pulse space-y-4">
+          <div className="h-32 rounded-xl bg-slate-300" />
+          <div className="h-32 rounded-xl bg-slate-300" />
+        </div>
+      }>
         <OpenSourceList />
       </Suspense>
     </div>
