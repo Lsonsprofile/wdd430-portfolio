@@ -29,3 +29,35 @@ export async function getProjectById(id: number): Promise<Project | null> {
   `;
   return (rows[0] as Project) ?? null;
 }
+
+
+
+const ITEMS_PER_PAGE = 6;
+
+export async function fetchFilteredProjects(query: string, currentPage: number) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const searchPattern = `%${query}%`;
+
+  const rows = await sql`
+    SELECT * FROM projects
+    WHERE title ILIKE ${searchPattern} 
+       OR description ILIKE ${searchPattern}
+    ORDER BY id
+    LIMIT ${ITEMS_PER_PAGE}
+    OFFSET ${offset}
+  `;
+  return rows as Project[];
+}
+
+export async function fetchProjectsPages(query: string) {
+  const searchPattern = `%${query}%`;
+
+  const rows = await sql`
+    SELECT COUNT(*)::int AS count FROM projects
+    WHERE title ILIKE ${searchPattern} 
+       OR description ILIKE ${searchPattern}
+  `;
+  
+  const count = rows[0]?.count ?? 0;
+  return Math.ceil(count / ITEMS_PER_PAGE);
+}
