@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Users, BookOpen } from 'lucide-react';
+import { Code, Database, Layout } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -10,10 +10,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <h1 className="text-5xl font-extrabold text-[#1e3a5f] leading-tight mb-4">
-              Plan. Serve.<br />Strengthen.
+              Emmanuel Ndogo - Full-Stack Developer
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              A simple way to organize and share sacrament meeting programs for your ward.
+              I am a full-stack developer learning Next.js and React. Here are some of my recent projects built with TypeScript, Tailwind CSS, and PostgreSQL.
             </p>
             <Link 
               href="/projects" 
@@ -24,10 +24,10 @@ export default function Home() {
           </div>
           <div className="md:w-1/2 relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
             <Image 
-              src="/temple.webp" 
-              alt="Temple" 
+              src="/Emmanuel.jpeg" 
+              alt="Emmanuel Ndogo" 
               fill 
-              className="object-cover"
+              className="object-cover object-[center_20%]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -38,28 +38,21 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-4 -mt-8 relative z-10">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col items-center text-center">
-            <Calendar className="w-8 h-8 text-blue-600 mb-3" />
-            <h3 className="font-bold text-gray-800 mb-2">Organize</h3>
-            <p className="text-sm text-gray-500">Plan meeting agendas with ease.</p>
+            <Layout className="w-8 h-8 text-blue-600 mb-3" />
+            <h3 className="font-bold text-gray-800 mb-2">Frontend</h3>
+            <p className="text-sm text-gray-500">Building responsive UIs with React and Tailwind CSS.</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col items-center text-center">
-            <Users className="w-8 h-8 text-blue-600 mb-3" />
-            <h3 className="font-bold text-gray-800 mb-2">Serve</h3>
-            <p className="text-sm text-gray-500">Support leaders and speakers.</p>
+            <Code className="w-8 h-8 text-blue-600 mb-3" />
+            <h3 className="font-bold text-gray-800 mb-2">Backend</h3>
+            <p className="text-sm text-gray-500">Creating API routes and Server Actions.</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col items-center text-center">
-            <BookOpen className="w-8 h-8 text-blue-600 mb-3" />
-            <h3 className="font-bold text-gray-800 mb-2">Share</h3>
-            <p className="text-sm text-gray-500">View and print current and past programs.</p>
+            <Database className="w-8 h-8 text-blue-600 mb-3" />
+            <h3 className="font-bold text-gray-800 mb-2">Database</h3>
+            <p className="text-sm text-gray-500">Connecting to PostgreSQL for persistent data.</p>
           </div>
         </div>
-      </section>
-
-      {/* Quote */}
-      <section className="text-center mt-16 italic text-gray-500 text-sm">
-        <p>"For where two or three are gathered together in my name,</p>
-        <p>there am I in the midst of them."</p>
-        <p className="mt-2 font-semibold">Matthew 18:20</p>
       </section>
     </div>
   );
